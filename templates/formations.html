@@ -1,0 +1,350 @@
+{% extends 'base.html' %}
+{% block title %}Formations — UFR STA{% endblock %}
+{% block content %}
+
+<section class="page-hero">
+  <div class="container">
+    <span class="section-eyebrow">Offre pédagogique</span>
+    <h1 class="page-title">Nos formations</h1>
+    <p class="page-desc">Des parcours de Licence, Master et Doctorat conçus pour répondre aux besoins du marché de l'emploi au Sénégal et à l'international.</p>
+  </div>
+</section>
+
+<!-- Filtres -->
+<div class="filter-bar">
+  <div class="container filter-container">
+    <button class="filter-btn active" data-filter="all">Toutes</button>
+    <button class="filter-btn" data-filter="licence">Licence</button>
+    <button class="filter-btn" data-filter="master">Master</button>
+    <button class="filter-btn" data-filter="mpi">MPI</button>
+    <button class="filter-btn" data-filter="sml">SML</button>
+    <button class="filter-btn" data-filter="miass">MIASS</button>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    {% if formations %}
+    <div class="formations-grid">
+      {% for f in formations %}
+      <div class="formation-card" data-niveau="{{ f.niveau|lower }}" data-dept="{{ f.nom|lower }}">
+        <div class="formation-card-header">
+          <span class="formation-niveau">{{ f.niveau }}</span>
+          <h2 class="formation-nom">{{ f.nom }}</h2>
+          <div class="formation-meta">
+            {% if f.duree %}<span class="meta-tag">⏱ {{ f.duree }}</span>{% endif %}
+          </div>
+        </div>
+        <div class="formation-card-body">
+          {% if f.conditions %}<div class="formation-section"><h4>Conditions d'admission</h4><p>{{ f.conditions }}</p></div>{% endif %}
+          {% if f.debouches %}<div class="formation-section"><h4>Débouchés</h4><p>{{ f.debouches }}</p></div>{% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <div class="formations-grid">
+
+      <!-- ══ FILIÈRE MPI ══════════════════════════════════ -->
+      <div class="formation-card" data-niveau="licence" data-dept="mpi" style="grid-column:1/-1">
+        <div class="formation-card-header" style="background:linear-gradient(135deg,#1A3A5C,#2a5080)">
+          <span class="formation-niveau">Licence · 3 ans</span>
+          <h2 class="formation-nom">Filière MPI — Mathématiques, Physique et Informatique</h2>
+          <div class="formation-meta">
+            <span class="meta-tag">S1 · S1A · S2 · S2A · S3 · S4</span>
+          </div>
+        </div>
+        <div class="formation-card-body">
+          <div class="formation-section">
+            <h4>Objectif</h4>
+            <p>Permettre aux étudiants d'acquérir des connaissances fondamentales, de développer des compétences analytiques et de résolution de problèmes, d'explorer les intersections interdisciplinaires et de préparer aux spécialisations et à la recherche scientifique.</p>
+          </div>
+          <div class="formation-section">
+            <h4>Spécialisations en L3</h4>
+            <div class="formations-list" style="margin-top:.5rem">
+              <div class="formation-badge" style="background:rgba(26,58,92,.08);border-color:var(--blue-mid)">📐 Mathématiques</div>
+              <div class="formation-badge" style="background:rgba(26,58,92,.08);border-color:var(--blue-mid)">💻 Informatique</div>
+              <div class="formation-badge" style="background:rgba(26,58,92,.08);border-color:var(--blue-mid)">⚛️ Physique et Applications</div>
+            </div>
+          </div>
+          <div class="formation-section">
+            <h4>Débouchés</h4>
+            <p>Développeur, ingénieur logiciel, data scientist, architecte de données, analyste en cybersécurité, administrateur réseaux, spécialiste IA & IoT, enseignant, chercheur, ingénieur R&D, actuaire, finance quantitative.</p>
+          </div>
+          <div class="programme-accordion">
+            <button class="accordion-btn" onclick="toggleAccordion(this)">Voir le programme ▾</button>
+            <div class="accordion-body">
+              <div class="semestres-grid">
+                <div class="semestre">
+                  <h5>S1 — Tronc commun</h5>
+                  <ul>
+                    <li>Algèbre linéaire</li>
+                    <li>Analyse 1</li>
+                    <li>Mécanique</li>
+                    <li>Algorithmique & Python</li>
+                    <li>Logique & Ensembles</li>
+                  </ul>
+                </div>
+                <div class="semestre">
+                  <h5>S2 — Tronc commun</h5>
+                  <ul>
+                    <li>Algèbre 2</li>
+                    <li>Analyse 2</li>
+                    <li>Électromagnétisme</li>
+                    <li>POO & Structures de données</li>
+                    <li>Probabilités</li>
+                  </ul>
+                </div>
+                <div class="semestre">
+                  <h5>S3 — Tronc commun</h5>
+                  <ul>
+                    <li>Analyse numérique</li>
+                    <li>Statistiques</li>
+                    <li>Optique</li>
+                    <li>Base de données</li>
+                    <li>Système d'exploitation</li>
+                  </ul>
+                </div>
+                <div class="semestre">
+                  <h5>S4 — Tronc commun MPI/SML</h5>
+                  <ul>
+                    <li>Thermodynamique</li>
+                    <li>Réseaux</li>
+                    <li>Modélisation</li>
+                    <li>Développement Web</li>
+                    <li>Anglais scientifique</li>
+                  </ul>
+                </div>
+                <div class="semestre">
+                  <h5>S5 — Spécialisation L3</h5>
+                  <ul>
+                    <li>Option Mathématiques</li>
+                    <li>Option Informatique</li>
+                    <li>Option Physique & App.</li>
+                  </ul>
+                </div>
+                <div class="semestre">
+                  <h5>S6 — Fin de cycle</h5>
+                  <ul>
+                    <li>Projet de fin d'études</li>
+                    <li>Stage en entreprise</li>
+                    <li>Mémoire de Licence</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ FILIÈRE SML ══════════════════════════════════ -->
+      <div class="formation-card" data-niveau="licence" data-dept="sml" style="grid-column:1/-1">
+        <div class="formation-card-header" style="background:linear-gradient(135deg,#0e4d6e,#1a6b8a)">
+          <span class="formation-niveau">Licence · 3 ans</span>
+          <h2 class="formation-nom">Filière SML — Sciences de la Mer et du Littoral</h2>
+          <div class="formation-meta">
+            <span class="meta-tag">S1 · S1A · S2 · S2A · S3 · S4</span>
+          </div>
+        </div>
+        <div class="formation-card-body">
+          <div class="formation-section">
+            <h4>Objectif</h4>
+            <p>Offrir aux étudiants une formation leur permettant d'accéder au plus haut niveau des connaissances académiques en recherche et dans le domaine professionnel. Préparer aux métiers de la protection des côtes, ports, plateformes offshore, gestion des ressources marines, biodiversité et économie bleue.</p>
+          </div>
+          <div class="formation-section">
+            <h4>Spécialisations</h4>
+            <div class="formations-list" style="margin-top:.5rem">
+              <div class="formation-badge" style="background:rgba(14,77,110,.08);border-color:#1a6b8a">🌊 Gestion des ressources marines</div>
+              <div class="formation-badge" style="background:rgba(14,77,110,.08);border-color:#1a6b8a">⚓ Génie côtier & maritime</div>
+              <div class="formation-badge" style="background:rgba(14,77,110,.08);border-color:#1a6b8a">🌿 Biodiversité & Écosystèmes marins</div>
+            </div>
+          </div>
+          <div class="formation-section">
+            <h4>Débouchés</h4>
+            <p>Enseignant-chercheur, ingénieur d'étude en environnement marin, chargé de mission littoral, technicien supérieur en métrologie, responsable production aquacole, cadre écologue, bureaux d'études, ONG, Aires Marines Protégées, Parcs nationaux, startups.</p>
+          </div>
+          <div class="programme-accordion">
+            <button class="accordion-btn" onclick="toggleAccordion(this)">Voir le programme ▾</button>
+            <div class="accordion-body">
+              <div class="semestres-grid">
+                <div class="semestre">
+                  <h5>S1 — Tronc commun</h5>
+                  <ul>
+                    <li>Mathématiques</li>
+                    <li>Physique</li>
+                    <li>Chimie</li>
+                    <li>Biologie marine (intro)</li>
+                  </ul>
+                </div>
+                <div class="semestre">
+                  <h5>S2 — Tronc commun</h5>
+                  <ul>
+                    <li>Océanographie physique</li>
+                    <li>Statistiques</li>
+                    <li>Écosystèmes côtiers</li>
+                    <li>Informatique appliquée</li>
+                  </ul>
+                </div>
+                <div class="semestre">
+                  <h5>S3 — S4</h5>
+                  <ul>
+                    <li>Dynamique des fluides</li>
+                    <li>Biodiversité marine</li>
+                    <li>Génie côtier</li>
+                    <li>Ressources halieutiques</li>
+                  </ul>
+                </div>
+                <div class="semestre">
+                  <h5>S5 — S6</h5>
+                  <ul>
+                    <li>Économie bleue</li>
+                    <li>Gestion du littoral</li>
+                    <li>Stage de terrain</li>
+                    <li>Mémoire de Licence</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ FILIÈRE MIASS ═════════════════════════════════ -->
+      <div class="formation-card" data-niveau="licence" data-dept="miass" style="grid-column:1/-1">
+        <div class="formation-card-header" style="background:linear-gradient(135deg,#B06A3A,#8a4f28)">
+          <span class="formation-niveau">Licence · 3 ans</span>
+          <h2 class="formation-nom">Filière MIASS — Mathématiques Informatique Appliquées aux Sciences Sociales</h2>
+          <div class="formation-meta">
+            <span class="meta-tag">S1 · S2 · S3 · S4 · STEG</span>
+          </div>
+        </div>
+        <div class="formation-card-body">
+          <div class="formation-section">
+            <h4>Objectif</h4>
+            <p>Former des spécialistes dans les métiers de la finance, de l'économie et de la gestion des organisations et de l'entreprise, en alliant les outils mathématiques et informatiques aux sciences humaines et sociales.</p>
+          </div>
+          <div class="formation-section">
+            <h4>Spécialisations</h4>
+            <div class="formations-list" style="margin-top:.5rem">
+              <div class="formation-badge" style="background:rgba(176,106,58,.08);border-color:var(--terra)">💰 Finance & Actuariat</div>
+              <div class="formation-badge" style="background:rgba(176,106,58,.08);border-color:var(--terra)">📊 Data Science appliquée</div>
+              <div class="formation-badge" style="background:rgba(176,106,58,.08);border-color:var(--terra)">🏢 Gestion des organisations</div>
+            </div>
+          </div>
+          <div class="formation-section">
+            <h4>Débouchés</h4>
+            <p>Actuaire, analyste quantitatif, trader, gestionnaire de portefeuille, banque & assurances, audit, marketing, modélisation économique, enseignant, entrepreneuriat, statisticien d'entreprise.</p>
+          </div>
+          <div class="programme-accordion">
+            <button class="accordion-btn" onclick="toggleAccordion(this)">Voir le programme ▾</button>
+            <div class="accordion-body">
+              <div class="semestres-grid">
+                <div class="semestre">
+                  <h5>S1 — S2</h5>
+                  <ul>
+                    <li>Mathématiques financières</li>
+                    <li>Statistiques descriptives</li>
+                    <li>Informatique de gestion</li>
+                    <li>Économie générale</li>
+                  </ul>
+                </div>
+                <div class="semestre">
+                  <h5>S3 — S4</h5>
+                  <ul>
+                    <li>Probabilités & inférence</li>
+                    <li>Base de données</li>
+                    <li>Comptabilité analytique</li>
+                    <li>Recherche opérationnelle</li>
+                  </ul>
+                </div>
+                <div class="semestre">
+                  <h5>S5 — S6</h5>
+                  <ul>
+                    <li>Data Science & Python</li>
+                    <li>Finance quantitative</li>
+                    <li>Gestion des risques</li>
+                    <li>Stage & Mémoire</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ MASTERS ════════════════════════════════════════ -->
+      <div class="formation-card" data-niveau="master" data-dept="mpi">
+        <div class="formation-card-header">
+          <span class="formation-niveau master">Master</span>
+          <h2 class="formation-nom">Masters MPI</h2>
+          <div class="formation-meta"><span class="meta-tag">⏱ 2 ans</span></div>
+        </div>
+        <div class="formation-card-body">
+          <div class="formation-section">
+            <h4>Filières envisagées</h4>
+            <div class="formations-list" style="margin-top:.5rem">
+              <div class="formation-badge">Analyse numérique & Modélisation</div>
+              <div class="formation-badge">Big Data, IoT & IA</div>
+              <div class="formation-badge">Cyber Security</div>
+              <div class="formation-badge">Robotique</div>
+              <div class="formation-badge">Bio-informatique</div>
+            </div>
+          </div>
+          <div class="formation-section">
+            <h4>Conditions d'admission</h4>
+            <p>Licence MPI ou équivalent. Dossier de candidature.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="formation-card" data-niveau="master" data-dept="sml">
+        <div class="formation-card-header" style="background:linear-gradient(135deg,#0e4d6e,#1a6b8a)">
+          <span class="formation-niveau master">Master</span>
+          <h2 class="formation-nom">Masters SML</h2>
+          <div class="formation-meta"><span class="meta-tag">⏱ 2 ans</span></div>
+        </div>
+        <div class="formation-card-body">
+          <div class="formation-section">
+            <h4>Filières envisagées</h4>
+            <div class="formations-list" style="margin-top:.5rem">
+              <div class="formation-badge">Génie côtier & maritime</div>
+              <div class="formation-badge">Modélisation des Océans et du Climat</div>
+              <div class="formation-badge">Économie Bleue</div>
+              <div class="formation-badge">Sciences & Technologies spatiales</div>
+              <div class="formation-badge">Master MIEL (interuniversitaire)</div>
+            </div>
+          </div>
+          <div class="formation-section">
+            <h4>Conditions d'admission</h4>
+            <p>Licence SML ou équivalent. Dossier de candidature.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+function toggleAccordion(btn) {
+  const body = btn.nextElementSibling;
+  const open = body.classList.toggle('open');
+  btn.textContent = open ? 'Masquer le programme ▴' : 'Voir le programme ▾';
+}
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    document.querySelectorAll('.formation-card').forEach(card => {
+      if (f === 'all') { card.style.display = ''; return; }
+      const match = card.dataset.niveau === f || card.dataset.dept === f;
+      card.style.display = match ? '' : 'none';
+    });
+  });
+});
+</script>
+{% endblock %}

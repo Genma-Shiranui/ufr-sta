@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Identification — UFR STA</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* ══ SLIDESHOW FOND ══════════════════════════════════════ */
+      .bg-slideshow {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+      }
+      .bg-slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+      }
+      .bg-slide.active {
+        opacity: 1;
+      }
+      .bg-slide:nth-child(1) {
+        background-image: url("/static/images/bg1.jpg");
+      }
+      .bg-slide:nth-child(2) {
+        background-image: url("/static/images/bg2.jpg");
+      }
+      .bg-slide:nth-child(3) {
+        background-image: url("/static/images/bg3.jpg");
+      }
+      .bg-slide:nth-child(4) {
+        background-image: url("/static/images/bg4.jpg");
+      }
+
+      /* Overlay sombre par dessus les images */
+      .bg-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 1;
+      }
+
+      /* ══ CONTENU ═════════════════════════════════════════════ */
+      .login-wrapper {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 440px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+      }
+
+      /* ── Logo + titre ── */
+      .login-top {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      .login-logo-wrap {
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.85rem;
+      }
+      .login-logo-img {
+        width: 70px;
+        height: 70px;
+        object-fit: contain;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        padding: 5px;
+      }
+      .login-logo-text {
+        text-align: left;
+      }
+      .login-logo-title {
+        display: block;
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #fff;
+        letter-spacing: 0.04em;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      }
+      .login-logo-sub {
+        display: block;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.7);
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+      }
+      .login-slogan {
+        font-size: 0.88rem;
+        color: rgba(255, 255, 255, 0.6);
+        font-style: italic;
+      }
+
+      /* ── Carte formulaire ── */
+      .login-card {
+        width: 100%;
+        background: rgba(15, 25, 35, 0.82);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 16px;
+        padding: 2.5rem 2.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.5);
+      }
+      .login-card-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 0.3rem;
+      }
+      .login-card-sub {
+        font-size: 0.82rem;
+        color: rgba(255, 255, 255, 0.38);
+        margin-bottom: 2rem;
+      }
+
+      /* Flash */
+      .flash {
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        margin-bottom: 1.25rem;
+      }
+      .flash-error {
+        background: rgba(239, 68, 68, 0.15);
+        color: #fca5a5;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+      }
+      .flash-success {
+        background: rgba(16, 185, 129, 0.15);
+        color: #6ee7b7;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+      }
+
+      /* Champs */
+      .form-group {
+        margin-bottom: 1.1rem;
+      }
+      .form-group label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.45);
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        margin-bottom: 0.45rem;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1.5px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: #fff;
+        font-size: 0.95rem;
+        font-family: inherit;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .form-group input::placeholder {
+        color: rgba(255, 255, 255, 0.22);
+      }
+      .form-group input:focus {
+        border-color: #00aeef;
+        background: rgba(0, 174, 239, 0.08);
+      }
+
+      /* Bouton */
+      .btn-login {
+        width: 100%;
+        padding: 0.9rem;
+        background: #00aeef;
+        color: #fff;
+        font-size: 0.95rem;
+        font-weight: 700;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        letter-spacing: 0.05em;
+        margin-top: 0.5rem;
+        transition:
+          background 0.2s,
+          transform 0.15s,
+          box-shadow 0.2s;
+      }
+      .btn-login:hover {
+        background: #0090c8;
+        transform: translateY(-1px);
+        box-shadow: 0 8px 24px rgba(0, 174, 239, 0.35);
+      }
+
+      /* Retour */
+      .login-back {
+        display: block;
+        text-align: center;
+        margin-top: 1.5rem;
+        font-size: 0.82rem;
+        color: rgba(255, 255, 255, 0.3);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .login-back:hover {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      /* Indicateurs slideshow */
+      .slide-dots {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        margin-top: 1.75rem;
+      }
+      .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        border: none;
+        cursor: pointer;
+        transition:
+          background 0.3s,
+          transform 0.3s;
+        padding: 0;
+      }
+      .dot.active {
+        background: #00aeef;
+        transform: scale(1.3);
+      }
+
+      /* Footer */
+      .login-footer {
+        margin-top: 1.5rem;
+        text-align: center;
+        font-size: 0.72rem;
+        color: rgba(255, 255, 255, 0.2);
+      }
+      .login-footer span {
+        color: rgba(255, 255, 255, 0.35);
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Slideshow fond -->
+    <div class="bg-slideshow">
+      <div class="bg-slide active"></div>
+      <div class="bg-slide"></div>
+      <div class="bg-slide"></div>
+      <div class="bg-slide"></div>
+    </div>
+    <div class="bg-overlay"></div>
+
+    <!-- Contenu centré -->
+    <div class="login-wrapper">
+      <!-- Logo -->
+      <div class="login-top">
+        <div class="login-logo-wrap">
+          <img
+            src="/static/images/logo-STA.png"
+            alt="Logo STA"
+            class="login-logo-img"
+          />
+          <div class="login-logo-text">
+            <span class="login-logo-title">UFR STA</span>
+            <span class="login-logo-sub">Université Amadou Mahtar Mbow</span>
+          </div>
+        </div>
+        <p class="login-slogan">
+          La ressource stratégique au cœur de l'enseignement
+        </p>
+      </div>
+
+      <!-- Carte -->
+      <div class="login-card">
+        <h1 class="login-card-title">Identification</h1>
+        <p class="login-card-sub">Entrez un identifiant et un mot de passe</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for cat, msg in messages %}
+        <div class="flash flash-{{ cat }}">{{ msg }}</div>
+        {% endfor %} {% endif %} {% endwith %}
+
+        <form method="POST">
+          <div class="form-group">
+            <label for="username">Identifiant</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Votre identifiant"
+              required
+              autofocus
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+          <button type="submit" class="btn-login">Se connecter</button>
+        </form>
+
+        <a href="{{ url_for('index') }}" class="login-back"
+          >← Retour au site public</a
+        >
+      </div>
+
+      <!-- Points indicateurs -->
+      <div class="slide-dots">
+        <button class="dot active" onclick="goTo(0)"></button>
+        <button class="dot" onclick="goTo(1)"></button>
+        <button class="dot" onclick="goTo(2)"></button>
+        <button class="dot" onclick="goTo(3)"></button>
+      </div>
+
+      <div class="login-footer">
+        UFR STA &nbsp;·&nbsp; <span>UAM Dakar</span> &nbsp;·&nbsp; 2026
+      </div>
+    </div>
+
+    <script>
+      const slides = document.querySelectorAll(".bg-slide");
+      const dots = document.querySelectorAll(".dot");
+      let current = 0;
+      let timer;
+
+      function goTo(n) {
+        slides[current].classList.remove("active");
+        dots[current].classList.remove("active");
+        current = n;
+        slides[current].classList.add("active");
+        dots[current].classList.add("active");
+        clearInterval(timer);
+        timer = setInterval(next, 5000);
+      }
+
+      function next() {
+        goTo((current + 1) % slides.length);
+      }
+
+      timer = setInterval(next, 5000);
+    </script>
+  </body>
+</html>

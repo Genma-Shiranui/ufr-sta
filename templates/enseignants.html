@@ -1,0 +1,200 @@
+{% extends 'base.html' %} {% block title %}Enseignants — UFR STA{% endblock %}
+{% block content %}
+
+<section class="page-hero">
+  <div class="container">
+    <span class="section-eyebrow">Corps enseignant</span>
+    <h1 class="page-title">Nos enseignants</h1>
+    <p class="page-desc">
+      Des enseignants-chercheurs engagés, spécialistes de leurs domaines, au
+      service de la formation et de la recherche scientifique.
+    </p>
+  </div>
+</section>
+
+<!-- Filtres par département -->
+<div class="filter-bar">
+  <div class="container filter-container">
+    <button class="filter-btn active" data-filter="all">Tous</button>
+    <button class="filter-btn" data-filter="mim">
+      Maths, Info & Modélisation
+    </button>
+    <button class="filter-btn" data-filter="smu">
+      Sciences de la Matière & Univers
+    </button>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    {% if enseignants %}
+    <div class="enseignants-grid">
+      {% for ens in enseignants %}
+      <div class="ens-card" data-dept="{{ ens.departement_id }}">
+        <div class="ens-photo-wrap">
+          {% if ens.photo %}
+          <img
+            src="{{ url_for('static', filename='images/' + ens.photo) }}"
+            alt="{{ ens.nom }}"
+            class="ens-photo"
+          />
+          {% else %}
+          <div class="ens-photo-placeholder">{{ ens.nom[0] }}</div>
+          {% endif %}
+          <span class="ens-grade-badge">{{ ens.grade }}</span>
+        </div>
+        <div class="ens-info">
+          <h3 class="ens-nom">{{ ens.nom }}</h3>
+          {% if ens.email %}
+          <a href="mailto:{{ ens.email }}" class="ens-email"
+            >✉️ {{ ens.email }}</a
+          >
+          {% endif %} {% if ens.recherche %}
+          <div class="ens-recherche">
+            <span class="ens-recherche-label">Domaines de recherche</span>
+            <p>{{ ens.recherche }}</p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <!-- Ceci sont des données par défaut car nous ne connaissons pas tous les ensignants et leurs grades -->
+    <div class="enseignants-grid">
+      <div class="ens-card" data-dept="mim">
+        <div class="ens-photo-wrap">
+          <img
+            src="{{ url_for('static', filename='images/directeur.jpg') }}"
+            alt="Coulibaly"
+            class="ens-photo"
+            onerror="
+              this.style.display = 'none';
+              this.nextElementSibling.style.display = 'grid';
+            "
+          />
+          <div class="ens-photo-placeholder" style="display: none">C</div>
+          <span class="ens-grade-badge">Directeur</span>
+        </div>
+        <div class="ens-info">
+          <h3 class="ens-nom">Coulibaly</h3>
+          <a href="mailto:directeur-ufrsta@uam.edu.sn" class="ens-email"
+            >✉️ directeur-ufrsta@uam.edu.sn</a
+          >
+          <div class="ens-recherche">
+            <span class="ens-recherche-label">Domaines de recherche</span>
+            <p>Mathématiques, Modélisation, Sciences computationnelles</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ens-card" data-dept="mim">
+        <div class="ens-photo-wrap">
+          <div class="ens-photo-placeholder">A</div>
+          <span class="ens-grade-badge">MCF</span>
+        </div>
+        <div class="ens-info">
+          <h3 class="ens-nom">Dr. Amadou Diallo</h3>
+          <a href="mailto:a.diallo@uam.edu.sn" class="ens-email"
+            >✉️ a.diallo@uam.edu.sn</a
+          >
+          <div class="ens-recherche">
+            <span class="ens-recherche-label">Domaines de recherche</span>
+            <p>Algorithmique, Intelligence Artificielle, Cryptographie</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ens-card" data-dept="mim">
+        <div class="ens-photo-wrap">
+          <div class="ens-photo-placeholder">F</div>
+          <span class="ens-grade-badge">Professeur</span>
+        </div>
+        <div class="ens-info">
+          <h3 class="ens-nom">Pr. Fatou Sow</h3>
+          <a href="mailto:f.sow@uam.edu.sn" class="ens-email"
+            >✉️ f.sow@uam.edu.sn</a
+          >
+          <div class="ens-recherche">
+            <span class="ens-recherche-label">Domaines de recherche</span>
+            <p>Algèbre, Analyse fonctionnelle, Probabilités</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ens-card" data-dept="mim">
+        <div class="ens-photo-wrap">
+          <div class="ens-photo-placeholder">M</div>
+          <span class="ens-grade-badge">MCF</span>
+        </div>
+        <div class="ens-info">
+          <h3 class="ens-nom">Dr. Moussa Ndiaye</h3>
+          <a href="mailto:m.ndiaye@uam.edu.sn" class="ens-email"
+            >✉️ m.ndiaye@uam.edu.sn</a
+          >
+          <div class="ens-recherche">
+            <span class="ens-recherche-label">Domaines de recherche</span>
+            <p>Big Data, Machine Learning, Systèmes distribués</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ens-card" data-dept="smu">
+        <div class="ens-photo-wrap">
+          <div class="ens-photo-placeholder">A</div>
+          <span class="ens-grade-badge">Professeur</span>
+        </div>
+        <div class="ens-info">
+          <h3 class="ens-nom">Pr. Aïssatou Ba</h3>
+          <a href="mailto:a.ba@uam.edu.sn" class="ens-email"
+            >✉️ a.ba@uam.edu.sn</a
+          >
+          <div class="ens-recherche">
+            <span class="ens-recherche-label">Domaines de recherche</span>
+            <p>
+              Océanographie physique, Dynamique du littoral, Changements
+              climatiques
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ens-card" data-dept="smu">
+        <div class="ens-photo-wrap">
+          <div class="ens-photo-placeholder">I</div>
+          <span class="ens-grade-badge">MCF</span>
+        </div>
+        <div class="ens-info">
+          <h3 class="ens-nom">Dr. Ibrahima Sarr</h3>
+          <a href="mailto:i.sarr@uam.edu.sn" class="ens-email"
+            >✉️ i.sarr@uam.edu.sn</a
+          >
+          <div class="ens-recherche">
+            <span class="ens-recherche-label">Domaines de recherche</span>
+            <p>Matériaux, Nanosciences, Énergies renouvelables</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll(".filter-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document
+        .querySelectorAll(".filter-btn")
+        .forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      const f = btn.dataset.filter;
+      document.querySelectorAll(".ens-card").forEach((card) => {
+        card.style.display =
+          f === "all" || card.dataset.dept === f ? "" : "none";
+      });
+    });
+  });
+</script>
+
+{% endblock %}

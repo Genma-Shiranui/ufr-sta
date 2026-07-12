@@ -1,0 +1,41 @@
+{% extends 'admin/base_admin.html' %}
+{% block admin_title %}Formations{% endblock %}
+{% block admin_title_top %}Gestion des formations{% endblock %}
+
+{% block admin_content %}
+<div class="admin-toolbar">
+  <a href="{{ url_for('admin_ajouter_formation') }}" class="btn-admin-primary">➕ Ajouter une formation</a>
+</div>
+
+{% if formations %}
+<div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead>
+      <tr><th>#</th><th>Nom</th><th>Niveau</th><th>Durée</th><th>Département</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+      {% for f in formations %}
+      <tr>
+        <td class="td-id">{{ f.id }}</td>
+        <td class="td-titre">{{ f.nom }}</td>
+        <td>{{ f.niveau or '—' }}</td>
+        <td>{{ f.duree or '—' }}</td>
+        <td>{{ f.dept_nom or '—' }}</td>
+        <td class="td-actions">
+          <form method="POST" action="{{ url_for('admin_supprimer_formation', id=f.id) }}"
+                style="display:inline" onsubmit="return confirm('Supprimer cette formation ?')">
+            <button type="submit" class="btn-action btn-delete">🗑 Supprimer</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="admin-empty">
+  <p>Aucune formation en base. Les formations affichées sur le site sont en dur dans le template.</p>
+  <a href="{{ url_for('admin_ajouter_formation') }}" class="btn-admin-primary">Ajouter une formation</a>
+</div>
+{% endif %}
+{% endblock %}

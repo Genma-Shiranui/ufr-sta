@@ -1,0 +1,56 @@
+{% extends 'admin/base_admin.html' %} {% block admin_title %}Activités{%
+endblock %} {% block admin_title_top %}Gestion des activités{% endblock %} {%
+block admin_content %}
+
+<div class="admin-toolbar">
+  <a href="{{ url_for('admin_ajouter_activite') }}" class="btn-admin-primary">
+    ➕ Ajouter une activité
+  </a>
+</div>
+
+{% if activites %}
+<div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Titre</th>
+        <th>Date</th>
+        <th>Lieu</th>
+        <th>Organisateur</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for act in activites %}
+      <tr>
+        <td class="td-id">{{ act.id }}</td>
+        <td class="td-titre">{{ act.titre }}</td>
+        <td class="td-date">{{ act.date }}</td>
+        <td>{{ act.lieu or '—' }}</td>
+        <td>{{ act.organisateur or '—' }}</td>
+        <td class="td-actions">
+          <form
+            method="POST"
+            action="{{ url_for('admin_supprimer_activite', id=act.id) }}"
+            style="display: inline"
+            onsubmit="return confirm('Supprimer cette activité ?');"
+          >
+            <button type="submit" class="btn-action btn-delete">
+              🗑 Supprimer
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="admin-empty">
+  <p>Aucune activité pour le moment.</p>
+  <a href="{{ url_for('admin_ajouter_activite') }}" class="btn-admin-primary">
+    Ajouter la première activité
+  </a>
+</div>
+{% endif %} {% endblock %}

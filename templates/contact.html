@@ -1,0 +1,157 @@
+{% extends 'base.html' %} {% block title %}Contact — UFR STA{% endblock %} {%
+block content %}
+
+<section class="page-hero">
+  <div class="container">
+    <span class="section-eyebrow">Nous rejoindre</span>
+    <h1 class="page-title">Contactez-nous</h1>
+    <p class="page-desc">
+      Une question sur nos formations, un partenariat, ou simplement envie d'en
+      savoir plus ? Écrivez-nous.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container contact-container">
+    <!-- Infos -->
+    <div class="contact-infos">
+      <h2 class="contact-infos-titre">Nos coordonnées</h2>
+
+      <div class="info-bloc">
+        <div class="info-icon">📍</div>
+        <div>
+          <h4>Adresse</h4>
+          <p>
+            UFR STA — Université Amadou Mahtar Mbow<br />
+            Rue 21x20, 2ème Arrondissement<br />
+            Pôle Urbain de Diamniadio<br />
+            BP : 45927 Dakar NAFA VDN — Sénégal
+          </p>
+        </div>
+      </div>
+
+      <div class="info-bloc">
+        <div class="info-icon">📩</div>
+        <div>
+          <h4>Email</h4>
+          <p>
+            <a
+              href="mailto:directeur-ufrsta@uam.edu.sn"
+              style="color: var(--blue-mid)"
+              >directeur-ufrsta@uam.edu.sn</a
+            >
+          </p>
+        </div>
+      </div>
+
+      <div class="info-bloc">
+        <div class="info-icon">☎</div>
+        <div>
+          <h4>Téléphone</h4>
+          <p>+221 33 844 10 00</p>
+        </div>
+      </div>
+
+      <div class="info-bloc">
+        <div class="info-icon">⏱</div>
+        <div>
+          <h4>Horaires du secrétariat</h4>
+          <p>Lundi – Vendredi : 8h00 – 17h00</p>
+          <p>Samedi : 8h00 – 12h00</p>
+        </div>
+      </div>
+
+      <div class="dept-contacts">
+        <h4>Contacts par département</h4>
+        <div class="dept-contact-item">
+          <span>🔢 Maths, Informatique & Modélisation</span>
+          <a href="mailto:directeur-ufrsta@uam.edu.sn"
+            >directeur-ufrsta@uam.edu.sn</a
+          >
+        </div>
+        <div class="dept-contact-item">
+          <span>🌊 Sciences de la Matière & de l'Univers</span>
+          <a href="mailto:directeur-ufrsta@uam.edu.sn"
+            >directeur-ufrsta@uam.edu.sn</a
+          >
+        </div>
+        <div class="dept-contact-item">
+          <span>🔬 Laboratoire CMED</span>
+          <a href="mailto:directeur-ufrsta@uam.edu.sn"
+            >directeur-ufrsta@uam.edu.sn</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulaire -->
+    <div class="contact-form-wrap">
+      <h2 class="contact-form-titre">Envoyer un message</h2>
+
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}{% for cat, msg in messages %}
+      <div class="flash flash-{{ cat }}">{{ msg }}</div>
+      {% endfor %}{% endif %} {% endwith %}
+
+      <form
+        action="{{ url_for('contact') }}"
+        method="POST"
+        class="contact-form"
+      >
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nom">Nom complet <span class="required">*</span></label>
+            <input
+              type="text"
+              id="nom"
+              name="nom"
+              placeholder="Votre nom"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">Email <span class="required">*</span></label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="votre@email.com"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="sujet">Sujet <span class="required">*</span></label>
+          <select id="sujet" name="sujet" required>
+            <option value="">-- Choisir un sujet --</option>
+            <option value="inscription">Inscription / Admission</option>
+            <option value="formation">Informations sur les formations</option>
+            <option value="mpi">Filière MPI</option>
+            <option value="sml">Filière SML</option>
+            <option value="miass">Filière MIASS</option>
+            <option value="stage">Stage / Emploi</option>
+            <option value="partenariat">Partenariat</option>
+            <option value="recherche">Laboratoire CMED / Recherche</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Message <span class="required">*</span></label>
+          <textarea
+            id="message"
+            name="message"
+            rows="6"
+            placeholder="Écrivez votre message ici..."
+            required
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-submit">
+          Envoyer le message
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block title %}Départements — UFR STA{% endblock %}
+{% block content %}
+
+<section class="page-hero">
+  <div class="container">
+    <span class="section-eyebrow">Organisation académique</span>
+    <h1 class="page-title">Nos départements</h1>
+    <p class="page-desc">L'UFR STA est organisée en deux départements couvrant les mathématiques, l'informatique, la physique et les sciences marines.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    {% if departements %}
+    {% for dep in departements %}
+    <div class="dept-detail-card">
+      <div class="dept-detail-header">
+        <div class="dept-detail-icon">
+          {% if 'Matière' in dep.nom or 'Univers' in dep.nom %}🌊
+          {% else %}🔢{% endif %}
+        </div>
+        <div>
+          <h2 class="dept-detail-nom">{{ dep.nom }}</h2>
+          {% if dep.responsable %}<span class="dept-detail-resp">Responsable : {{ dep.responsable }}</span>{% endif %}
+        </div>
+      </div>
+      {% if dep.description %}<p class="dept-detail-desc">{{ dep.description }}</p>{% endif %}
+      <div class="dept-detail-footer">
+        {% if dep.contact %}<span class="dept-contact">✉️ {{ dep.contact }}</span>{% endif %}
+        <a href="{{ url_for('formations') }}" class="btn btn-green">Voir les formations →</a>
+      </div>
+    </div>
+    {% endfor %}
+
+    {% else %}
+
+    <!-- ══ Département 1 ══ -->
+    <div class="dept-detail-card">
+      <div class="dept-detail-header">
+        <div class="dept-detail-icon">🔢</div>
+        <div>
+          <h2 class="dept-detail-nom">Département Mathématiques, Informatique et Modélisation</h2>
+          <span class="dept-detail-resp">Responsable : À définir</span>
+        </div>
+      </div>
+      <p class="dept-detail-desc">
+        Ce département forme des professionnels et chercheurs dans les domaines des mathématiques fondamentales
+        et appliquées, de l'informatique, de la modélisation et des sciences sociales quantitatives. Il s'appuie
+        sur un modèle pédagogique intégré alliant formation professionnelle et formation par la recherche.
+      </p>
+
+      <h4 style="font-size:.85rem;font-weight:700;color:var(--blue-dark);margin:.75rem 0 .5rem;text-transform:uppercase;letter-spacing:.07em">Filières</h4>
+      <div class="formations-list">
+        <div class="formation-badge">MPI — Mathématiques, Physique et Informatique</div>
+        <div class="formation-badge">MIASS — Mathématiques Informatique Appliquées aux Sciences Sociales</div>
+      </div>
+
+      <h4 style="font-size:.85rem;font-weight:700;color:var(--blue-dark);margin:1rem 0 .5rem;text-transform:uppercase;letter-spacing:.07em">Spécialisations L3 (filière MPI)</h4>
+      <div class="formations-list">
+        <div class="formation-badge" style="background:rgba(26,58,92,.08);border-color:var(--blue-mid)">Mathématiques</div>
+        <div class="formation-badge" style="background:rgba(26,58,92,.08);border-color:var(--blue-mid)">Informatique</div>
+        <div class="formation-badge" style="background:rgba(26,58,92,.08);border-color:var(--blue-mid)">Physique et Applications</div>
+      </div>
+
+      <h4 style="font-size:.85rem;font-weight:700;color:var(--blue-dark);margin:1rem 0 .5rem;text-transform:uppercase;letter-spacing:.07em">Baccalauréats acceptés</h4>
+      <div class="formations-list">
+        <div class="formation-badge">S1 · S1A · S2 · S2A · S3 · S4</div>
+        <div class="formation-badge">STEG (pour MIASS)</div>
+      </div>
+
+      <div class="dept-detail-footer">
+        <span class="dept-contact">📩 directeur-ufrsta@uam.edu.sn</span>
+        <a href="{{ url_for('formations') }}" class="btn btn-green">Voir les formations →</a>
+      </div>
+    </div>
+
+    <!-- ══ Département 2 ══ -->
+    <div class="dept-detail-card">
+      <div class="dept-detail-header">
+        <div class="dept-detail-icon">🌊</div>
+        <div>
+          <h2 class="dept-detail-nom">Département Sciences de la Matière et de l'Univers</h2>
+          <span class="dept-detail-resp">Responsable : À définir</span>
+        </div>
+      </div>
+      <p class="dept-detail-desc">
+        Ce département propose des formations innovantes dans les domaines des sciences de la mer et du littoral,
+        de la physique et de ses applications. Il prépare les étudiants aux métiers de la protection du littoral,
+        de la gestion des ressources marines, des énergies renouvelables, des matériaux et du spatial.
+        Le curseur est positionné sur l'utilisation des nanosciences et nanotechnologies.
+      </p>
+
+      <h4 style="font-size:.85rem;font-weight:700;color:var(--blue-dark);margin:.75rem 0 .5rem;text-transform:uppercase;letter-spacing:.07em">Filières</h4>
+      <div class="formations-list">
+        <div class="formation-badge">SML — Sciences de la Mer et du Littoral</div>
+        <div class="formation-badge">Physique et Applications</div>
+      </div>
+
+      <h4 style="font-size:.85rem;font-weight:700;color:var(--blue-dark);margin:1rem 0 .5rem;text-transform:uppercase;letter-spacing:.07em">Domaines clés</h4>
+      <div class="formations-list">
+        <div class="formation-badge" style="background:rgba(176,106,58,.07);border-color:var(--terra)">Matériaux</div>
+        <div class="formation-badge" style="background:rgba(176,106,58,.07);border-color:var(--terra)">Énergies renouvelables</div>
+        <div class="formation-badge" style="background:rgba(176,106,58,.07);border-color:var(--terra)">Eau & Environnement</div>
+        <div class="formation-badge" style="background:rgba(176,106,58,.07);border-color:var(--terra)">Sciences Spatiales</div>
+        <div class="formation-badge" style="background:rgba(176,106,58,.07);border-color:var(--terra)">Génie côtier & maritime</div>
+        <div class="formation-badge" style="background:rgba(176,106,58,.07);border-color:var(--terra)">Biodiversité marine</div>
+      </div>
+
+      <h4 style="font-size:.85rem;font-weight:700;color:var(--blue-dark);margin:1rem 0 .5rem;text-transform:uppercase;letter-spacing:.07em">Baccalauréats acceptés</h4>
+      <div class="formations-list">
+        <div class="formation-badge">S1 · S1A · S2 · S2A · S3 · S4</div>
+      </div>
+
+      <div class="dept-detail-footer">
+        <span class="dept-contact">📩 directeur-ufrsta@uam.edu.sn</span>
+        <a href="{{ url_for('formations') }}" class="btn btn-green">Voir les formations →</a>
+      </div>
+    </div>
+
+    <!-- ══ Laboratoire CMED ══ -->
+    <div class="dept-detail-card" style="border-left-color:var(--blue-mid)">
+      <div class="dept-detail-header">
+        <div class="dept-detail-icon">🔬</div>
+        <div>
+          <h2 class="dept-detail-nom">Laboratoire CMED</h2>
+          <span class="dept-detail-resp">Calcul scientifique, Modélisation, Environnement et Développement durable</span>
+        </div>
+      </div>
+      <p class="dept-detail-desc">
+        Les activités de recherche de l'UFR STA sont organisées au sein du laboratoire CMED,
+        suivant une approche pluridisciplinaire. Il est structuré en trois équipes thématiques.
+      </p>
+      <div class="formations-list">
+        <div class="formation-badge">CMS — Calcul scientifique, Modélisation et Simulations numériques</div>
+        <div class="formation-badge">2EMC — Eau, Environnement Marin-Littoral et Changements climatiques</div>
+        <div class="formation-badge">MIT — Matériaux et Innovation Technologiques</div>
+      </div>
+      <div class="dept-detail-footer">
+        <span class="dept-contact">📩 directeur-ufrsta@uam.edu.sn</span>
+      </div>
+    </div>
+
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

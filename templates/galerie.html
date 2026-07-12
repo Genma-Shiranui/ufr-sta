@@ -1,0 +1,164 @@
+{% extends 'base.html' %} {% block title %}Galerie — UFR STA{% endblock %} {%
+block content %}
+
+<section class="page-hero">
+  <div class="container">
+    <span class="section-eyebrow">Mémoire visuelle</span>
+    <h1 class="page-title">Galerie photos</h1>
+    <p class="page-desc">
+      Albums photos des événements, activités et moments forts de la vie de
+      l'UFR STA.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    {% if albums %}
+    <div class="albums-grid">
+      {% for album in albums %}
+      <div class="album-card">
+        <div class="album-cover">
+          <div class="album-cover-placeholder">🖼️</div>
+          <div class="album-overlay">
+            <span class="album-count">Album</span>
+          </div>
+        </div>
+        <div class="album-info">
+          <h3 class="album-titre">{{ album.titre }}</h3>
+          {% if album.date %}<span class="album-date">{{ album.date }}</span>{%
+          endif %} {% if album.description %}
+          <p class="album-desc">{{ album.description }}</p>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% else %}
+
+    <div class="galerie-annee">
+      <h2 class="annee-titre">Année 2026</h2>
+      <div class="albums-grid">
+        <div class="album-card" onclick="openAlbum()">
+          <div class="album-cover">
+            <div class="album-cover-placeholder album-cover-green">
+              <span>💻</span>
+            </div>
+            <div class="album-overlay">
+              <span class="album-count">12 photos</span>
+            </div>
+          </div>
+          <div class="album-info">
+            <h3 class="album-titre">Hackathon UFR STA 2026</h3>
+            <span class="album-date">8 mars 2026</span>
+            <p class="album-desc">
+              48h de codage, 12 équipes, une nuit blanche mémorable.
+            </p>
+          </div>
+        </div>
+
+        <div class="album-card" onclick="openAlbum()">
+          <div class="album-cover">
+            <div class="album-cover-placeholder album-cover-gold">
+              <span>🔬</span>
+            </div>
+            <div class="album-overlay">
+              <span class="album-count">20 photos</span>
+            </div>
+          </div>
+          <div class="album-info">
+            <h3 class="album-titre">Journée scientifique</h3>
+            <span class="album-date">25 février 2026</span>
+            <p class="album-desc">
+              Exposés, posters et démonstrations des travaux de recherche.
+            </p>
+          </div>
+        </div>
+
+        <div class="album-card" onclick="openAlbum()">
+          <div class="album-cover">
+            <div class="album-cover-placeholder album-cover-blue">
+              <span>🤝</span>
+            </div>
+            <div class="album-overlay">
+              <span class="album-count">15 photos</span>
+            </div>
+          </div>
+          <div class="album-info">
+            <h3 class="album-titre">Forum de l'emploi</h3>
+            <span class="album-date">15 janvier 2026</span>
+            <p class="album-desc">
+              Rencontres entre étudiants et recruteurs des grandes entreprises.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="galerie-annee">
+      <h2 class="annee-titre">Année 2025</h2>
+      <div class="albums-grid">
+        <div class="album-card" onclick="openAlbum()">
+          <div class="album-cover">
+            <div class="album-cover-placeholder album-cover-purple">
+              <span>🎓</span>
+            </div>
+            <div class="album-overlay">
+              <span class="album-count">35 photos</span>
+            </div>
+          </div>
+          <div class="album-info">
+            <h3 class="album-titre">Cérémonie de remise de diplômes</h3>
+            <span class="album-date">Novembre 2025</span>
+            <p class="album-desc">
+              Remise officielle des diplômes de Licence et Master — promotion
+              2025.
+            </p>
+          </div>
+        </div>
+
+        <div class="album-card" onclick="openAlbum()">
+          <div class="album-cover">
+            <div class="album-cover-placeholder album-cover-teal">
+              <span>⚛️</span>
+            </div>
+            <div class="album-overlay">
+              <span class="album-count">8 photos</span>
+            </div>
+          </div>
+          <div class="album-info">
+            <h3 class="album-titre">TP Physique — Laboratoire</h3>
+            <span class="album-date">Novembre 2025</span>
+            <p class="album-desc">
+              Travaux pratiques d'optique et d'électricité des L2 Physique.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+      <div class="lightbox-content" onclick="event.stopPropagation()">
+        <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+        <div class="lightbox-placeholder">
+          🖼️
+          <p>Photos disponibles après ajout via le module admin.</p>
+        </div>
+      </div>
+    </div>
+
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  function openAlbum() {
+    document.getElementById("lightbox").classList.add("open");
+  }
+  function closeLightbox() {
+    document.getElementById("lightbox").classList.remove("open");
+  }
+</script>
+
+{% endblock %}

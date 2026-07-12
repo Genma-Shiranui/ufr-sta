@@ -1,0 +1,261 @@
+{% extends 'admin/base_admin.html' %} {% block admin_title %}Messages{% endblock
+%} {% block admin_title_top %}Messages reçus{% endblock %} {% block
+admin_content %} {% if messages %}
+<div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Sujet</th>
+        <th>Message</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for msg in messages %}
+      <tr>
+        <td class="td-id">{{ msg.id }}</td>
+        <td><strong>{{ msg.nom }}</strong></td>
+        <td>
+          <a href="mailto:{{ msg.email }}" style="color: var(--blue-mid)"
+            >{{ msg.email }}</a
+          >
+        </td>
+        <td>{{ msg.sujet or '—' }}</td>
+        <td style="max-width: 200px">
+          <span class="msg-preview"
+            >{{ msg.message[:60] }}{% if msg.message|length > 60 %}…{% endif
+            %}</span
+          >
+          {% if msg.message|length > 60 %}
+          <button
+            class="btn-voir-plus"
+            data-nom="{{ msg.nom }}"
+            data-email="{{ msg.email }}"
+            data-sujet="{{ msg.sujet or '' }}"
+            data-message="{{ msg.message }}"
+            data-date="{{ msg.date_envoi[:10] if msg.date_envoi else '' }}"
+            onclick="ouvrirMessage(this)"
+          >
+            Voir tout
+          </button>
+          {% endif %}
+        </td>
+        <td class="td-date">
+          {{ msg.date_envoi[:10] if msg.date_envoi else '—' }}
+        </td>
+        <td class="td-actions">
+          <a href="mailto:{{ msg.email }}" class="btn-action btn-edit"
+            >✉️ Répondre</a
+          >
+          <form
+            method="POST"
+            action="{{ url_for('admin_supprimer_message', id=msg.id) }}"
+            style="display: inline"
+            onsubmit="return confirm('Supprimer ce message ?');"
+          >
+            <button type="submit" class="btn-action btn-delete">
+              Supprimer
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% else %}
+<div class="admin-empty">
+  <p>Aucun message reçu pour le moment.</p>
+</div>
+{% endif %}
+
+<!-- ══ MODALE ═════════════════════════════════════════════ -->
+<div id="msg-modal" class="msg-modal" onclick="fermerModal(event)">
+  <div class="msg-modal-card">
+    <button class="msg-modal-close" onclick="fermerMessage()">✕</button>
+    <div class="msg-modal-header">
+      <div class="msg-modal-avatar" id="modal-avatar">A</div>
+      <div>
+        <div class="msg-modal-nom" id="modal-nom">—</div>
+        <div class="msg-modal-email" id="modal-email">—</div>
+      </div>
+    </div>
+    <div class="msg-modal-meta">
+      <span class="msg-modal-sujet" id="modal-sujet">—</span>
+      <span class="msg-modal-date" id="modal-date">—</span>
+    </div>
+    <div class="msg-modal-body" id="modal-message">—</div>
+    <div class="msg-modal-actions">
+      <a id="modal-reply" href="#" class="btn-admin-primary">✉️ Répondre</a>
+      <button onclick="fermerMessage()" class="btn-admin-outline">
+        Fermer
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .btn-voir-plus {
+    display: inline-block;
+    margin-top: 0.3rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--blue-mid);
+    background: rgba(58, 155, 213, 0.1);
+    border: 1px solid rgba(58, 155, 213, 0.25);
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+    cursor: pointer;
+    transition: background 0.18s;
+  }
+  .btn-voir-plus:hover {
+    background: rgba(58, 155, 213, 0.2);
+  }
+  .msg-preview {
+    font-size: 0.82rem;
+    color: var(--gray-600);
+  }
+
+  .msg-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 300;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .msg-modal.open {
+    display: flex;
+  }
+  .msg-modal-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 560px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .msg-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--gray-100);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: background 0.18s;
+  }
+  .msg-modal-close:hover {
+    background: var(--gray-200);
+  }
+  .msg-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .msg-modal-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--blue-dark);
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+  .msg-modal-nom {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--gray-800);
+  }
+  .msg-modal-email {
+    font-size: 0.82rem;
+    color: var(--blue-mid);
+  }
+  .msg-modal-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--gray-100);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    margin-bottom: 1.25rem;
+    gap: 1rem;
+  }
+  .msg-modal-sujet {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--blue-dark);
+  }
+  .msg-modal-date {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .msg-modal-body {
+    font-size: 0.95rem;
+    color: var(--gray-600);
+    line-height: 1.75;
+    white-space: pre-wrap;
+    border-left: 3px solid var(--blue-mid);
+    padding: 0.75rem 1rem;
+    background: var(--gray-100);
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 1.5rem;
+  }
+  .msg-modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+  }
+</style>
+
+<script>
+  function ouvrirMessage(btn) {
+    const nom = btn.dataset.nom;
+    const email = btn.dataset.email;
+    const sujet = btn.dataset.sujet;
+    const message = btn.dataset.message;
+    const date = btn.dataset.date;
+
+    document.getElementById("modal-nom").textContent = nom;
+    document.getElementById("modal-email").textContent = email;
+    document.getElementById("modal-sujet").textContent = sujet || "Sans sujet";
+    document.getElementById("modal-date").textContent = date;
+    document.getElementById("modal-message").textContent = message;
+    document.getElementById("modal-reply").href = "mailto:" + email;
+    document.getElementById("modal-avatar").textContent = nom
+      .charAt(0)
+      .toUpperCase();
+    document.getElementById("msg-modal").classList.add("open");
+  }
+  function fermerMessage() {
+    document.getElementById("msg-modal").classList.remove("open");
+  }
+  function fermerModal(e) {
+    if (e.target === document.getElementById("msg-modal")) fermerMessage();
+  }
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") fermerMessage();
+  });
+</script>
+
+{% endblock %}

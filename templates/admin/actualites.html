@@ -1,0 +1,65 @@
+{% extends 'admin/base_admin.html' %} {% block admin_title %}Actualités{%
+endblock %} {% block admin_title_top %}Gestion des actualités{% endblock %} {%
+block admin_content %}
+
+<div class="admin-toolbar">
+  <a href="{{ url_for('admin_ajouter_actualite') }}" class="btn-admin-primary">
+    ➕ Ajouter une actualité
+  </a>
+</div>
+
+{% if actualites %}
+<div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Titre</th>
+        <th>Date</th>
+        <th>Photo</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for actu in actualites %}
+      <tr>
+        <td class="td-id">{{ actu.id }}</td>
+        <td class="td-titre">{{ actu.titre }}</td>
+        <td class="td-date">{{ actu.date }}</td>
+        <td class="td-photo">
+          {% if actu.photo %}
+          <span class="badge-oui">✓ Oui</span>
+          {% else %}
+          <span class="badge-non">— Non</span>
+          {% endif %}
+        </td>
+        <td class="td-actions">
+          <a
+            href="{{ url_for('admin_modifier_actualite', id=actu.id) }}"
+            class="btn-action btn-edit"
+            >✏️ Modifier</a
+          >
+          <form
+            method="POST"
+            action="{{ url_for('admin_supprimer_actualite', id=actu.id) }}"
+            style="display: inline"
+            onsubmit="return confirm('Supprimer cette actualité ?');"
+          >
+            <button type="submit" class="btn-action btn-delete">
+              🗑 Supprimer
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="admin-empty">
+  <p>Aucune actualité pour le moment.</p>
+  <a href="{{ url_for('admin_ajouter_actualite') }}" class="btn-admin-primary">
+    Ajouter la première actualité
+  </a>
+</div>
+{% endif %} {% endblock %}

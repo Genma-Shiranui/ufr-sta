@@ -1,0 +1,248 @@
+{% extends 'base.html' %} {% block title %}Accueil — UFR STA{% endblock %} {%
+block content %}
+
+<!-- ══ HERO ═══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-eyebrow"
+      >Université Amadou Mahtar Mbow de Diamniadio</span
+    >
+    <h1 class="hero-title">UFR Sciences &amp; Technologies Avancées</h1>
+    <p class="hero-desc">
+      Un hub scientifique, technologique et d'innovation de référence en
+      Afrique, au service du développement socio-économique du Sénégal.
+    </p>
+    <div class="hero-actions">
+      <a href="{{ url_for('formations') }}" class="btn btn-primary"
+        >Découvrir nos formations</a
+      >
+      <a href="{{ url_for('contact') }}" class="btn btn-outline"
+        >Nous contacter</a
+      >
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">2</span>
+      <span class="stat-label">Départements</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">3</span>
+      <span class="stat-label">Filières</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">Licence</span>
+      <span class="stat-label">Master · Doctorat</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MOT DU DIRECTEUR ═══════════════════════════════════ -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="directeur-card">
+      <div class="directeur-avatar">
+        <img
+          src="{{ url_for('static', filename='images/directeur.jpg') }}"
+          alt="Directeur UFR STA"
+          class="directeur-photo"
+          onerror="
+            this.style.display = 'none';
+            this.nextElementSibling.style.display = 'grid';
+          "
+        />
+        <div class="avatar-placeholder" style="display: none">D</div>
+      </div>
+      <div class="directeur-body">
+        <span class="section-eyebrow">Mot du Directeur</span>
+        <h2 class="section-title">Une UFR tournée vers l'excellence</h2>
+        <p>
+          L'UFR STA ambitionne d'être un creuset d'excellence académique pour le
+          développement des talents, un véritable hub scientifique,
+          technologique, numérique et d'innovation de référence en Afrique au
+          service des besoins de développement socio-économique du Sénégal et
+          au-delà.
+        </p>
+        <p>
+          Nos étudiants y trouveront des formations innovantes adaptées aux
+          besoins du marché de l'emploi, un corps professoral qualifié et
+          engagé, et un environnement favorable à l'éclosion des jeunes talents
+          pour l'entrepreneuriat.
+        </p>
+        <span class="directeur-name"
+          >— Dr. Coulibaly, Directeur de l'UFR STA</span
+        >
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DÉPARTEMENTS ════════════════════════════════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Organisation académique</span>
+      <h2 class="section-title">Nos départements</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="dept-card">
+        <div class="dept-icon">🔢</div>
+        <h3>Mathématiques, Informatique et Modélisation</h3>
+        <p>
+          Filières MPI et MIASS — mathématiques, physique, informatique,
+          modélisation et sciences sociales appliquées.
+        </p>
+        <a href="{{ url_for('departements') }}" class="card-link"
+          >En savoir plus →</a
+        >
+      </div>
+      <div class="dept-card">
+        <div class="dept-icon">🌊</div>
+        <h3>Sciences de la Matière et de l'Univers</h3>
+        <p>
+          Filières SML et Physique & Applications — sciences de la mer, génie
+          côtier, énergies, matériaux.
+        </p>
+        <a href="{{ url_for('departements') }}" class="card-link"
+          >En savoir plus →</a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FILIÈRES ════════════════════════════════════════════ -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Offre de formation</span>
+      <h2 class="section-title">Nos filières</h2>
+      <a href="{{ url_for('formations') }}" class="section-link"
+        >Voir toutes les formations →</a
+      >
+    </div>
+    <div class="cards-grid">
+      <div class="dept-card">
+        <div class="dept-icon">Σ</div>
+        <h3>MPI</h3>
+        <p>
+          Mathématiques, Physique et Informatique — formation fondamentale et
+          interdisciplinaire avec spécialisations en L3.
+        </p>
+        <a href="{{ url_for('formations') }}" class="card-link"
+          >Voir la filière →</a
+        >
+      </div>
+      <div class="dept-card">
+        <div class="dept-icon">🌊</div>
+        <h3>SML</h3>
+        <p>
+          Sciences de la Mer et du Littoral — gestion des ressources marines,
+          génie côtier, biodiversité et économie bleue.
+        </p>
+        <a href="{{ url_for('formations') }}" class="card-link"
+          >Voir la filière →</a
+        >
+      </div>
+      <div class="dept-card">
+        <div class="dept-icon">📊</div>
+        <h3>MIASS</h3>
+        <p>
+          Mathématiques Informatique Appliquées aux Sciences Sociales — finance,
+          économie, gestion des organisations.
+        </p>
+        <a href="{{ url_for('formations') }}" class="card-link"
+          >Voir la filière →</a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ACTUALITÉS ══════════════════════════════════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Vie de l'UFR</span>
+      <h2 class="section-title">Dernières actualités</h2>
+      <a href="{{ url_for('actualites') }}" class="section-link"
+        >Toutes les actualités →</a
+      >
+    </div>
+    {% if actualites %}
+    <div class="news-grid">
+      {% for actu in actualites %}
+      <article class="news-card">
+        {% if actu.photo %}
+        <img
+          src="{{ url_for('static', filename='images/' + actu.photo) }}"
+          alt="{{ actu.titre }}"
+          class="news-img"
+        />
+        {% else %}
+        <div class="news-img-placeholder">📰</div>
+        {% endif %}
+        <div class="news-body">
+          <span class="news-date">{{ actu.date }}</span>
+          <h3 class="news-title">{{ actu.titre }}</h3>
+          <p class="news-desc">
+            {{ actu.description[:120] }}{% if actu.description|length > 120
+            %}…{% endif %}
+          </p>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state"><span>Aucune actualité pour le moment.</span></div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- ══ LABORATOIRE CMED ════════════════════════════════════ -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Recherche & Innovation</span>
+      <h2 class="section-title">Laboratoire CMED</h2>
+    </div>
+    <div class="directeur-card" style="border-left-color: var(--blue-mid)">
+      <div class="directeur-body">
+        <p>
+          L'UFR STA développe la recherche appliquée au sein du
+          <strong
+            >Laboratoire Calcul scientifique, Modélisation, Environnement et
+            Développement durable (CMED)</strong
+          >, structuré en trois équipes :
+        </p>
+        <div class="formations-list" style="margin-top: 1rem">
+          <div class="formation-badge">
+            CMS — Calcul scientifique & Simulations
+          </div>
+          <div class="formation-badge">
+            2EMC — Eau, Environnement Marin & Climat
+          </div>
+          <div class="formation-badge">
+            MIT — Matériaux & Innovation Technologiques
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA CONTACT ═════════════════════════════════════════ -->
+<section class="section cta-section">
+  <div class="container cta-container">
+    <h2 class="cta-title">Une question sur nos formations ?</h2>
+    <p class="cta-desc">
+      Notre équipe est disponible pour vous orienter et répondre à toutes vos
+      demandes.
+    </p>
+    <a href="{{ url_for('contact') }}" class="btn btn-primary"
+      >Envoyer un message</a
+    >
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'admin/base_admin.html' %}
+{% block admin_title %}{% if enseignant %}Modifier{% else %}Ajouter{% endif %} un enseignant{% endblock %}
+{% block admin_title_top %}{% if enseignant %}Modifier{% else %}Ajouter{% endif %} un enseignant{% endblock %}
+
+{% block admin_content %}
+<div class="admin-form-card">
+  <form method="POST" class="admin-form">
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="nom">Nom complet <span class="required">*</span></label>
+        <input type="text" id="nom" name="nom"
+               value="{{ enseignant.nom if enseignant else '' }}"
+               placeholder="Dr. Prénom Nom" required>
+      </div>
+      <div class="form-group">
+        <label for="grade">Grade <span class="required">*</span></label>
+        <select id="grade" name="grade" required>
+          <option value="">-- Choisir --</option>
+          {% for g in ['Professeur Titulaire', 'Maître de Conférences', 'MCF', 'Assistant', 'Docteur', 'Chargé de cours', 'Directeur'] %}
+          <option value="{{ g }}" {% if enseignant and enseignant.grade == g %}selected{% endif %}>{{ g }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="departement_id">Département</label>
+        <select id="departement_id" name="departement_id">
+          <option value="">-- Choisir --</option>
+          {% for d in departements %}
+          <option value="{{ d.id }}" {% if enseignant and enseignant.departement_id == d.id %}selected{% endif %}>{{ d.nom }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="email">Email professionnel</label>
+        <input type="email" id="email" name="email"
+               value="{{ enseignant.email if enseignant else '' }}"
+               placeholder="prenom.nom@uam.edu.sn">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="recherche">Domaines de recherche</label>
+      <textarea id="recherche" name="recherche" rows="3"
+                placeholder="Ex: Intelligence Artificielle, Big Data, Cybersécurité...">{{ enseignant.recherche if enseignant else '' }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="photo">Nom du fichier photo</label>
+      <input type="text" id="photo" name="photo"
+             value="{{ enseignant.photo if enseignant else '' }}"
+             placeholder="ex: prof-diallo.jpg">
+      <small class="form-hint">Déposez la photo dans static/images/ puis indiquez son nom ici.</small>
+    </div>
+
+    <div class="admin-form-actions">
+      <a href="{{ url_for('admin_enseignants') }}" class="btn-admin-outline">Annuler</a>
+      <button type="submit" class="btn-admin-primary">
+        {% if enseignant %}💾 Enregistrer{% else %}➕ Ajouter l'enseignant{% endif %}
+      </button>
+    </div>
+
+  </form>
+</div>
+{% endblock %}

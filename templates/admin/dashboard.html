@@ -1,0 +1,74 @@
+{% extends 'admin/base_admin.html' %} {% block admin_title %}Tableau de bord{%
+endblock %} {% block admin_content %}
+
+<div class="dash-welcome">
+  <h2 class="dash-title">Bienvenue dans l'administration</h2>
+  <p class="dash-sub">UFR STA — Gestion des contenus du site .</p>
+</div>
+
+<!-- Stats -->
+<div class="dash-stats">
+  <div class="dash-stat-card">
+    <div class="dash-stat-icon"></div>
+    <div class="dash-stat-num">{{ nb_actu }}</div>
+    <div class="dash-stat-label">Actualités</div>
+    <a href="{{ url_for('admin_actualites') }}" class="dash-stat-link"
+      >Gérer →</a
+    >
+  </div>
+  <div class="dash-stat-card">
+    <div class="dash-stat-icon"></div>
+    <div class="dash-stat-num">{{ nb_act }}</div>
+    <div class="dash-stat-label">Activités</div>
+    <a href="{{ url_for('admin_activites') }}" class="dash-stat-link"
+      >Gérer →</a
+    >
+  </div>
+  <div class="dash-stat-card">
+    <div class="dash-stat-icon"></div>
+    <div class="dash-stat-num">{{ nb_album }}</div>
+    <div class="dash-stat-label">Albums</div>
+    <a href="{{ url_for('admin_galerie') }}" class="dash-stat-link">Gérer →</a>
+  </div>
+</div>
+<div class="dash-stats">
+  <div class="dash-stat-card">
+    <div class="dash-stat-icon"></div>
+    <div class="dash-stat-num">{{ nb_ens }}</div>
+    <div class="dash-stat-label">Enseignants</div>
+    <a href="{{ url_for('admin_enseignants') }}" class="dash-stat-link"
+      >Gérer →</a
+    >
+  </div>
+  <div class="dash-stat-card">
+    <div class="dash-stat-icon"></div>
+    <div class="dash-stat-num">{{ nb_msg }}</div>
+    <div class="dash-stat-label">Messages</div>
+    <a href="{{ url_for('admin_messages') }}" class="dash-stat-link">Voir →</a>
+  </div>
+</div>
+
+<!-- Actions rapides -->
+<div class="dash-section">
+  <h3 class="dash-section-title">Actions rapides</h3>
+  <div class="quick-actions">
+    <a href="{{ url_for('admin_ajouter_actualite') }}" class="quick-btn">
+      <span class="quick-icon">➕</span>
+      <span>Nouvelle actualité</span>
+    </a>
+    <a href="{{ url_for('admin_ajouter_activite') }}" class="quick-btn">
+      <span class="quick-icon">➕</span>
+      <span>Nouvelle activité</span>
+    </a>
+    <a
+      href="{{ url_for('index') }}"
+      class="quick-btn quick-btn-outline"
+      target="_blank"
+    >
+      <span class="quick-icon"></span>
+      <span>Voir le site</span>
+    </a>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,165 @@
+{% extends 'base.html' %} {% block title %}Actualités — UFR STA{% endblock %} {%
+block content %}
+
+<section class="page-hero">
+  <div class="container">
+    <span class="section-eyebrow">Vie universitaire</span>
+    <h1 class="page-title">Actualités</h1>
+    <p class="page-desc">
+      Séminaires, conférences, résultats, appels à candidature — toute
+      l'information de l'UFR STA.
+    </p>
+  </div>
+</section>
+
+<!-- Filtres par catégorie -->
+<div class="filter-bar">
+  <div class="container filter-container">
+    <button class="filter-btn active" data-filter="all">Toutes</button>
+    <button class="filter-btn" data-filter="seminaire">Séminaires</button>
+    <button class="filter-btn" data-filter="conference">Conférences</button>
+    <button class="filter-btn" data-filter="soutenance">Soutenances</button>
+    <button class="filter-btn" data-filter="resultat">Résultats</button>
+    <button class="filter-btn" data-filter="candidature">Candidatures</button>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    {% if actualites %}
+    <div class="actu-list">
+      {% for actu in actualites %}
+      <article class="actu-card">
+        {% if actu.photo %}
+        <img
+          src="{{ url_for('static', filename='images/' + actu.photo) }}"
+          alt="{{ actu.titre }}"
+          class="actu-img"
+        />
+        {% else %}
+        <div class="actu-img-placeholder">📰</div>
+        {% endif %}
+        <div class="actu-body">
+          <span class="actu-date">{{ actu.date }}</span>
+          <h2 class="actu-title">{{ actu.titre }}</h2>
+          <p class="actu-desc">{{ actu.description }}</p>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <!-- Exemples par défaut -->
+    <div class="actu-list">
+      <article class="actu-card" data-cat="conference">
+        <div class="actu-img-placeholder">🎤</div>
+        <div class="actu-body">
+          <div class="actu-meta">
+            <span class="actu-date">15 juin 2026</span>
+            <span class="actu-tag">Conférence</span>
+          </div>
+          <h2 class="actu-title">
+            Conférence internationale sur l'Intelligence Artificielle
+          </h2>
+          <p class="actu-desc">
+            L'UFR STA accueille des chercheurs de renom pour une journée de
+            conférences sur les dernières avancées en IA générative et
+            apprentissage automatique. Ouvert à tous les étudiants.
+          </p>
+        </div>
+      </article>
+
+      <article class="actu-card" data-cat="soutenance">
+        <div class="actu-img-placeholder">🎓</div>
+        <div class="actu-body">
+          <div class="actu-meta">
+            <span class="actu-date">10 juin 2026</span>
+            <span class="actu-tag">Soutenance</span>
+          </div>
+          <h2 class="actu-title">
+            Soutenances de mémoires — Master Informatique
+          </h2>
+          <p class="actu-desc">
+            Les étudiants du Master 2 Informatique défendent leurs mémoires de
+            fin d'études. Les soutenances sont ouvertes au public à la salle
+            principale de l'UFR STA.
+          </p>
+        </div>
+      </article>
+
+      <article class="actu-card" data-cat="resultat">
+        <div class="actu-img-placeholder">📊</div>
+        <div class="actu-body">
+          <div class="actu-meta">
+            <span class="actu-date">5 juin 2026</span>
+            <span class="actu-tag tag-resultat">Résultats</span>
+          </div>
+          <h2 class="actu-title">Résultats des examens — Semestre 2</h2>
+          <p class="actu-desc">
+            Les résultats du second semestre de l'année 2025-2026 sont
+            disponibles. Les étudiants peuvent consulter leurs notes auprès de
+            leur département respectif.
+          </p>
+        </div>
+      </article>
+
+      <article class="actu-card" data-cat="candidature">
+        <div class="actu-img-placeholder">📝</div>
+        <div class="actu-body">
+          <div class="actu-meta">
+            <span class="actu-date">1 juin 2026</span>
+            <span class="actu-tag tag-candidature">Candidature</span>
+          </div>
+          <h2 class="actu-title">
+            Appel à candidature — Master 1 Informatique 2026-2027
+          </h2>
+          <p class="actu-desc">
+            Les inscriptions pour le Master 1 Informatique sont ouvertes
+            jusqu'au 30 juin 2026. Les dossiers sont à déposer au secrétariat du
+            département ou par voie électronique.
+          </p>
+        </div>
+      </article>
+
+      <article class="actu-card" data-cat="seminaire">
+        <div class="actu-img-placeholder">📚</div>
+        <div class="actu-body">
+          <div class="actu-meta">
+            <span class="actu-date">20 mai 2026</span>
+            <span class="actu-tag tag-seminaire">Séminaire</span>
+          </div>
+          <h2 class="actu-title">
+            Séminaire de recherche — Mathématiques appliquées
+          </h2>
+          <p class="actu-desc">
+            Le département Mathématiques organise un séminaire mensuel sur les
+            thématiques de recherche actuelles : optimisation, statistiques
+            bayésiennes et modélisation stochastique.
+          </p>
+        </div>
+      </article>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll(".filter-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document
+        .querySelectorAll(".filter-btn")
+        .forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      const f = btn.dataset.filter;
+      document.querySelectorAll(".actu-card").forEach((card) => {
+        if (f === "all") {
+          card.style.display = "";
+          return;
+        }
+        card.style.display = card.dataset.cat === f ? "" : "none";
+      });
+    });
+  });
+</script>
+
+{% endblock %}

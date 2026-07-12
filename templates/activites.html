@@ -1,0 +1,208 @@
+{% extends 'base.html' %} {% block title %}Activités — UFR STA{% endblock %} {%
+block content %}
+
+<section class="page-hero">
+  <div class="container">
+    <span class="section-eyebrow">Journal des activités</span>
+    <h1 class="page-title">Activités de l'UFR</h1>
+    <p class="page-desc">
+      Visites, ateliers, conférences, compétitions — retour sur la vie active de
+      notre communauté.
+    </p>
+  </div>
+</section>
+
+<div class="filter-bar">
+  <div class="container filter-container">
+    <button class="filter-btn active" data-filter="all">Toutes</button>
+    <button class="filter-btn" data-filter="atelier">Ateliers</button>
+    <button class="filter-btn" data-filter="conference">Conférences</button>
+    <button class="filter-btn" data-filter="visite">Visites</button>
+    <button class="filter-btn" data-filter="competition">Compétitions</button>
+    <button class="filter-btn" data-filter="sortie">
+      Sorties pédagogiques
+    </button>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    {% if activites %}
+    <div class="activites-list">
+      {% for act in activites %}
+      <article class="activite-card">
+        <div class="activite-aside">
+          <div class="activite-date-block">
+            <span class="act-day">{{ act.date[:2] }}</span>
+            <span class="act-month">{{ act.date }}</span>
+          </div>
+        </div>
+        <div class="activite-body">
+          <div class="activite-meta">
+            {% if act.lieu %}<span class="act-meta-item">📍 {{ act.lieu }}</span
+            >{% endif %} {% if act.organisateur %}<span class="act-meta-item"
+              >👤 {{ act.organisateur }}</span
+            >{% endif %}
+          </div>
+          <h2 class="activite-title">{{ act.titre }}</h2>
+          <p class="activite-desc">{{ act.description }}</p>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <div class="activites-list">
+      <article class="activite-card" data-cat="atelier">
+        <div class="activite-aside">
+          <div class="activite-date-block">
+            <span class="act-day">15</span>
+            <span class="act-month">Avr 2026</span>
+          </div>
+          <span class="act-type-badge">Atelier</span>
+        </div>
+        <div class="activite-body">
+          <div class="activite-meta">
+            <span class="act-meta-item">📍 Salle Informatique</span>
+            <span class="act-meta-item">👤 Dept. Informatique</span>
+          </div>
+          <h2 class="activite-title">Atelier IA Générative</h2>
+          <p class="activite-desc">
+            Formation destinée aux étudiants de L3 Informatique sur
+            l'utilisation de l'IA générative : prompting avancé, intégration
+            d'API, création d'applications intelligentes. Séance pratique de 4
+            heures avec projets en binôme.
+          </p>
+          <div class="activite-photos">
+            <div class="photo-thumb">📷</div>
+            <div class="photo-thumb">📷</div>
+            <div class="photo-thumb">📷</div>
+            <span class="photo-count">3 photos</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="activite-card" data-cat="competition">
+        <div class="activite-aside">
+          <div class="activite-date-block">
+            <span class="act-day">08</span>
+            <span class="act-month">Mar 2026</span>
+          </div>
+          <span class="act-type-badge badge-competition">Compétition</span>
+        </div>
+        <div class="activite-body">
+          <div class="activite-meta">
+            <span class="act-meta-item">📍 Amphi principal</span>
+            <span class="act-meta-item">👤 UFR STA</span>
+          </div>
+          <h2 class="activite-title">Hackathon UFR STA 2026</h2>
+          <p class="activite-desc">
+            48 heures de codage intensif autour du thème « Numérique pour le
+            développement durable ». 12 équipes, 3 prix décernés. Premier prix
+            remporté par l'équipe DataSEN avec une application de gestion des
+            déchets connectée.
+          </p>
+          <div class="activite-photos">
+            <div class="photo-thumb">📷</div>
+            <div class="photo-thumb">📷</div>
+            <div class="photo-thumb">📷</div>
+            <div class="photo-thumb">📷</div>
+            <span class="photo-count">8 photos</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="activite-card" data-cat="visite">
+        <div class="activite-aside">
+          <div class="activite-date-block">
+            <span class="act-day">20</span>
+            <span class="act-month">Fév 2026</span>
+          </div>
+          <span class="act-type-badge badge-visite">Visite</span>
+        </div>
+        <div class="activite-body">
+          <div class="activite-meta">
+            <span class="act-meta-item">📍 Dakar</span>
+            <span class="act-meta-item">👤 Dept. Informatique</span>
+          </div>
+          <h2 class="activite-title">
+            Visite d'entreprise — Sonatel Digital Hub
+          </h2>
+          <p class="activite-desc">
+            Les étudiants de Master 1 Informatique ont visité le Digital Hub de
+            Sonatel à Dakar. Découverte des infrastructures télécoms, rencontre
+            avec des ingénieurs seniors et présentation des opportunités de
+            stage.
+          </p>
+        </div>
+      </article>
+
+      <article class="activite-card" data-cat="conference">
+        <div class="activite-aside">
+          <div class="activite-date-block">
+            <span class="act-day">12</span>
+            <span class="act-month">Jan 2026</span>
+          </div>
+          <span class="act-type-badge badge-conf">Conférence</span>
+        </div>
+        <div class="activite-body">
+          <div class="activite-meta">
+            <span class="act-meta-item">📍 Salle de conférence</span>
+            <span class="act-meta-item">👤 Dept. Mathématiques</span>
+          </div>
+          <h2 class="activite-title">
+            Conférence — Cryptographie et sécurité des données
+          </h2>
+          <p class="activite-desc">
+            Le Pr. Amadou Diallo, expert en cryptographie, a animé une
+            conférence sur les fondements mathématiques de la cryptographie
+            moderne, de RSA aux courbes elliptiques.
+          </p>
+        </div>
+      </article>
+
+      <article class="activite-card" data-cat="sortie">
+        <div class="activite-aside">
+          <div class="activite-date-block">
+            <span class="act-day">05</span>
+            <span class="act-month">Nov 2025</span>
+          </div>
+          <span class="act-type-badge badge-sortie">Sortie pédagogique</span>
+        </div>
+        <div class="activite-body">
+          <div class="activite-meta">
+            <span class="act-meta-item">📍 Laboratoire UAM</span>
+            <span class="act-meta-item">👤 Dept. Physique</span>
+          </div>
+          <h2 class="activite-title">
+            Sortie pédagogique — Travaux pratiques optique
+          </h2>
+          <p class="activite-desc">
+            Les L2 Physique ont réalisé des expériences d'optique géométrique au
+            laboratoire : réfraction, diffraction, formation d'images. Séance
+            encadrée par trois enseignants.
+          </p>
+        </div>
+      </article>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll(".filter-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document
+        .querySelectorAll(".filter-btn")
+        .forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      const f = btn.dataset.filter;
+      document.querySelectorAll(".activite-card").forEach((card) => {
+        card.style.display =
+          f === "all" || card.dataset.cat === f ? "" : "none";
+      });
+    });
+  });
+</script>
+
+{% endblock %}

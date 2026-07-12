@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}UFR STA — Université Amadou Mahtar Mbow{% endblock %}
+    </title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <!-- ══ NAVBAR ══════════════════════════════════════════════ -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="{{ url_for('index') }}" class="nav-brand">
+          <img
+            src="{{ url_for('static', filename='images/logo-STA.png') }}"
+            alt="Logo STA"
+            class="nav-logo-img"
+          />
+          <div class="nav-brand-text">
+            <span class="nav-brand-name">UFR STA</span>
+            <span class="nav-brand-sub">Université Amadou Mahtar Mbow</span>
+          </div>
+        </a>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <ul class="nav-links" id="navLinks">
+          <li>
+            <a
+              href="{{ url_for('index') }}"
+              class="nav-link {% if request.endpoint == 'index' %}active{% endif %}"
+              >Accueil</a
+            >
+          </li>
+          <li>
+            <a
+              href="{{ url_for('departements') }}"
+              class="nav-link {% if request.endpoint == 'departements' %}active{% endif %}"
+              >Départements</a
+            >
+          </li>
+          <li>
+            <a
+              href="{{ url_for('formations') }}"
+              class="nav-link {% if request.endpoint == 'formations' %}active{% endif %}"
+              >Formations</a
+            >
+          </li>
+          <li>
+            <a
+              href="{{ url_for('enseignants') }}"
+              class="nav-link {% if request.endpoint == 'enseignants' %}active{% endif %}"
+              >Enseignants</a
+            >
+          </li>
+          <li>
+            <a
+              href="{{ url_for('actualites') }}"
+              class="nav-link {% if request.endpoint == 'actualites' %}active{% endif %}"
+              >Actualités</a
+            >
+          </li>
+          <li>
+            <a
+              href="{{ url_for('activites') }}"
+              class="nav-link {% if request.endpoint == 'activites' %}active{% endif %}"
+              >Activités</a
+            >
+          </li>
+          <li>
+            <a
+              href="{{ url_for('galerie') }}"
+              class="nav-link {% if request.endpoint == 'galerie' %}active{% endif %}"
+              >Galerie</a
+            >
+          </li>
+          <li>
+            <a
+              href="{{ url_for('contact') }}"
+              class="nav-link nav-link-cta {% if request.endpoint == 'contact' %}active{% endif %}"
+              >Contact</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- ══ CONTENU PRINCIPAL ══════════════════════════════════ -->
+    <main>
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div class="flash-container">
+        {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %} {% block content %}{% endblock %}
+    </main>
+
+    <!-- ══ FOOTER ═════════════════════════════════════════════ -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-col">
+          <div class="footer-brand">
+            <img
+              src="{{ url_for('static', filename='images/logo-STA.png') }}"
+              alt="Logo STA"
+              class="footer-logo-img"
+            />
+            <div>
+              <div class="footer-brand-name">UFR STA</div>
+              <div class="footer-brand-sub">
+                Sciences & Technologies Avancées
+              </div>
+            </div>
+          </div>
+          <p class="footer-desc">
+            Université Amadou Mahtar Mbow — former des esprits critiques et des
+            professionnels engagés.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('departements') }}">Départements</a></li>
+            <li><a href="{{ url_for('formations') }}">Formations</a></li>
+            <li><a href="{{ url_for('actualites') }}">Actualités</a></li>
+            <li><a href="{{ url_for('activites') }}">Activités</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Contact</h4>
+          <ul class="footer-links footer-contact">
+            <li>📍 Diamniadio, Sénégal</li>
+            <li>📩 sta@uam.edu.sn</li>
+            <li>☎ +221 33 844 10 00</li>
+            <li>⏱ 8h00 - 17h00</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 UFR STA — Université Amadou Mahtar Mbow</span>
+      </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>
